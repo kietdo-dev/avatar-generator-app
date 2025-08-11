@@ -1,0 +1,492 @@
+.avatar-generator {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 100vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.avatar-generator h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.generator-container {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.avatar-display {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 20px;
+}
+
+.avatar-controls {
+  flex: 1;
+  min-width: 300px;
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-controls h2 {
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+}
+
+/* Avatar Styles */
+.avatar {
+  position: relative;
+  width: 300px;
+  height: 350px;
+  margin: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Hair Styles */
+.hair {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.hair-short {
+  width: 180px;
+  height: 80px;
+  border-radius: 90px 90px 0 0;
+}
+
+.hair-long {
+  width: 200px;
+  height: 120px;
+  border-radius: 100px 100px 50px 50px;
+}
+
+.hair-curly {
+  width: 190px;
+  height: 90px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.hair-curly::before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  top: 10px;
+  left: 20px;
+  background: inherit;
+}
+
+.hair-curly::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  top: 5px;
+  right: 25px;
+  background: inherit;
+}
+
+.hair-bald {
+  display: none;
+}
+
+.hair-spiky {
+  width: 180px;
+  height: 70px;
+  background: linear-gradient(45deg, transparent 30%, currentColor 30%, currentColor 70%, transparent 70%);
+  background-size: 20px 20px;
+}
+
+.hair-ponytail {
+  width: 160px;
+  height: 80px;
+  border-radius: 80px 80px 0 0;
+}
+
+.hair-ponytail::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 100px;
+  background: inherit;
+  border-radius: 20px;
+  top: 60px;
+  right: -20px;
+  transform: rotate(15deg);
+}
+
+/* Hair Colors */
+.hair-color-brown { background-color: #8B4513; }
+.hair-color-black { background-color: #2F2F2F; }
+.hair-color-blonde { background-color: #FFD700; }
+.hair-color-red { background-color: #CD5C5C; }
+.hair-color-gray { background-color: #A9A9A9; }
+.hair-color-blue { background-color: #4169E1; }
+.hair-color-pink { background-color: #FF69B4; }
+
+/* Head */
+.head {
+  position: relative;
+  width: 200px;
+  height: 220px;
+  border-radius: 100px 100px 80px 80px;
+  margin: 40px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Skin Colors */
+.skin-light { background-color: #FFDBAC; }
+.skin-medium { background-color: #E8B889; }
+.skin-dark { background-color: #8D5524; }
+.skin-tan { background-color: #DEB887; }
+
+/* Eyebrows */
+.eyebrows {
+  position: absolute;
+  top: 50px;
+  width: 140px;
+  height: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.eyebrows::before,
+.eyebrows::after {
+  content: '';
+  width: 60px;
+  height: 8px;
+  background-color: #333;
+  border-radius: 4px;
+}
+
+.eyebrows-normal::before,
+.eyebrows-normal::after {
+  height: 6px;
+}
+
+.eyebrows-thick::before,
+.eyebrows-thick::after {
+  height: 10px;
+}
+
+.eyebrows-thin::before,
+.eyebrows-thin::after {
+  height: 3px;
+}
+
+.eyebrows-raised::before,
+.eyebrows-raised::after {
+  transform: rotate(-10deg);
+}
+
+.eyebrows-angry::before {
+  transform: rotate(15deg);
+  transform-origin: right;
+}
+
+.eyebrows-angry::after {
+  transform: rotate(-15deg);
+  transform-origin: left;
+}
+
+/* Eyes */
+.eyes {
+  position: absolute;
+  top: 70px;
+  width: 120px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eye {
+  width: 45px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.pupil {
+  width: 20px;
+  height: 20px;
+  background-color: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pupil::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
+/* Eye Variations */
+.eyes-big .eye {
+  width: 55px;
+  height: 40px;
+}
+
+.eyes-big .pupil {
+  width: 25px;
+  height: 25px;
+}
+
+.eyes-small .eye {
+  width: 35px;
+  height: 20px;
+}
+
+.eyes-small .pupil {
+  width: 15px;
+  height: 15px;
+}
+
+.eyes-sleepy .eye {
+  height: 15px;
+  border-radius: 50% 50% 50% 50% / 20% 20% 80% 80%;
+}
+
+.eyes-sleepy .pupil {
+  width: 15px;
+  height: 10px;
+}
+
+.eyes-wink .left-eye {
+  height: 5px;
+  background-color: #333;
+  border-radius: 50px;
+}
+
+.eyes-wink .left-eye .pupil {
+  display: none;
+}
+
+/* Nose */
+.nose {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nose-normal {
+  width: 20px;
+  height: 25px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.nose-big {
+  width: 30px;
+  height: 35px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.nose-small {
+  width: 12px;
+  height: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.nose-pointed {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 25px solid rgba(0, 0, 0, 0.1);
+  background: none;
+}
+
+.nose-button {
+  width: 15px;
+  height: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+/* Mouth */
+.mouth {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mouth-smile {
+  width: 60px;
+  height: 30px;
+  border: 3px solid #333;
+  border-top: none;
+  border-radius: 0 0 60px 60px;
+  background: none;
+}
+
+.mouth-neutral {
+  width: 40px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+}
+
+.mouth-frown {
+  width: 50px;
+  height: 25px;
+  border: 3px solid #333;
+  border-bottom: none;
+  border-radius: 50px 50px 0 0;
+  background: none;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.mouth-laugh {
+  width: 70px;
+  height: 40px;
+  border: 4px solid #333;
+  border-top: none;
+  border-radius: 0 0 70px 70px;
+  background: #FFB6C1;
+}
+
+.mouth-surprised {
+  width: 25px;
+  height: 35px;
+  background-color: #333;
+  border-radius: 50%;
+}
+
+.mouth-kiss {
+  width: 30px;
+  height: 20px;
+  background-color: #FF69B4;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.mouth-kiss::before {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 10px;
+  background-color: #FF1493;
+  border-radius: 50%;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Control Styles */
+.control-group {
+  margin-bottom: 20px;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.control-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+  transition: border-color 0.3s ease;
+}
+
+.control-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.randomize-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.randomize-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
+}
+
+.randomize-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .generator-container {
+    flex-direction: column;
+  }
+  
+  .avatar-display {
+    position: static;
+  }
+  
+  .avatar {
+    width: 250px;
+    height: 300px;
+    padding: 20px;
+  }
+  
+  .head {
+    width: 170px;
+    height: 190px;
+  }
+  
+  .hair-short,
+  .hair-long,
+  .hair-curly,
+  .hair-spiky,
+  .hair-ponytail {
+    width: 150px;
+  }
+}
