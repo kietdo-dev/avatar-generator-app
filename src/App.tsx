@@ -1,4 +1,4 @@
-import AvatarGenerator from './components/AvatarGenerator'
+import AvatarGenerator from '@src/components/AvatarGenerator'
 import './App.css'
 
 function App() {
