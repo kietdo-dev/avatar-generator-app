@@ -1,5 +1,5 @@
 import { useRef, useState, type FC } from "react";
-import "./AvatarGenerator.css";
+import "@src/components/molecules/AvatarGenerator.css";
 import { Items } from "@src/constants/items";
 import type { AvatarOptions } from "@src/interfaces";
 import { ItemSelect } from "@src/components/atoms/ItemSelect";
@@ -93,20 +93,17 @@ const AvatarGenerator: FC = () => {
 
         {/* Controls */}
         <div className="avatar-controls">
-          {Object.entries(avatarOptions).map(([feature, value]) => {
-            console.log(`Rendering ${feature} with value ${value}`);
-            return (
-              <ItemSelect
-                key={feature}
-                label={feature as keyof AvatarOptions}
-                value={value}
-                options={Items[`${feature}` as keyof typeof Items] as string[]}
-                onChange={(feature, event) =>
-                  updateAvatarOption(feature as keyof AvatarOptions, event)
-                }
-              />
-            );
-          })}
+          {Object.entries(avatarOptions).map(([feature, value]) => (
+            <ItemSelect
+              key={feature}
+              label={feature as keyof AvatarOptions}
+              value={value}
+              options={Items[`${feature}` as keyof typeof Items] as string[]}
+              onChange={(feature, event) =>
+                updateAvatarOption(feature as keyof AvatarOptions, event)
+              }
+            />
+          ))}
         </div>
        
       </div>
