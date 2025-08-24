@@ -1,64 +1,26 @@
-import { useRef, useState, type FC } from "react";
-import "@src/components/molecules/AvatarGenerator.css";
+import type { FC, RefObject } from "react";
+
+import { ItemSelect } from "@src/components/atoms/ItemSelect";
 import { Items } from "@src/constants/items";
 import type { AvatarOptions } from "@src/interfaces";
-import { ItemSelect } from "@src/components/atoms/ItemSelect";
-import html2canvas from "html2canvas";
 
-const AvatarGenerator: FC = () => {
-  const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>({
-    eyes: "normal",
-    nose: "normal",
-    mouth: "smile",
-    hairStyle: "short",
-    hairColor: "brown",
-    skinColor: "light",
-    eyebrows: "normal",
-  });
+import "@src/components/molecules/AvatarGenerator.css";
 
-  const updateAvatarOption = (feature: keyof AvatarOptions, value: string) => {
-    setAvatarOptions((prev) => ({
-      ...prev,
-      [feature]: value,
-    }));
-  };
+interface AvatarGeneratorProps {
+  avatarOptions: AvatarOptions;
+  updateAvatarOption: (feature: keyof AvatarOptions, value: string) => void;
+  onRandomizeAvatar: () => void;
+  captureRef: RefObject<HTMLDivElement>;
+  handleCapture: () => void;
+}
 
-  const onRandomItem = (items: string[]) => {
-    return items[Math.floor(Math.random() * items.length)];
-  };
-
-  const onRandomizeAvatar = () => {
-    setAvatarOptions({
-      eyes: onRandomItem(Items.eyes),
-      nose: onRandomItem(Items.nose),
-      mouth: onRandomItem(Items.mouth),
-      hairStyle: onRandomItem(Items.hairStyle),
-      hairColor: onRandomItem(Items.hairColor),
-      skinColor: onRandomItem(Items.skinColor),
-      eyebrows: onRandomItem(Items.eyebrows),
-    });
-  };
-
-  const captureRef = useRef<HTMLDivElement | null>(null);
-
-  const handleCapture = () => {
-    if (captureRef.current) {
-      html2canvas(captureRef.current, {
-        useCORS: true,
-        scale: 2, // Increase resolution
-      })
-        .then((canvas) => {
-          const image = canvas.toDataURL("image/png");
-          const link = document.createElement("a");
-          link.href = image;
-          link.download = "avatar.png";
-          link.click();
-        })
-        .catch((err) => {
-          console.error("Error capturing screenshot:", err);
-        });
-    }
-  };
+const AvatarGenerator: FC<AvatarGeneratorProps> = ({
+  avatarOptions,
+  updateAvatarOption,
+  onRandomizeAvatar,
+  captureRef,
+  handleCapture,
+}) => {
   return (
     <div className="avatar-generator">
       <h1>Avatar Generator</h1>
@@ -93,29 +55,28 @@ const AvatarGenerator: FC = () => {
 
         {/* Controls */}
         <div className="avatar-controls">
-          {Object.entries(avatarOptions).map(([feature, value]) => (
+          {Object.entries(avatarOptions).map(([featureKey, value]) => (
             <ItemSelect
-              key={feature}
-              label={feature as keyof AvatarOptions}
+              key={featureKey}
+              label={featureKey as keyof AvatarOptions}
               value={value}
-              options={Items[`${feature}` as keyof typeof Items] as string[]}
+              options={Items[featureKey as keyof typeof Items] as string[]}
               onChange={(feature, event) =>
                 updateAvatarOption(feature as keyof AvatarOptions, event)
               }
             />
           ))}
         </div>
-       
       </div>
 
       <div className="button-container">
-         <button className="randomize-btn" onClick={onRandomizeAvatar}>
+        <button className="randomize-btn" onClick={onRandomizeAvatar}>
           🎲 Randomize Avatar
         </button>
         <button className="randomize-btn" onClick={handleCapture}>
           📸 Capture Avatar
         </button>
-       </div>
+      </div>
     </div>
   );
 };
