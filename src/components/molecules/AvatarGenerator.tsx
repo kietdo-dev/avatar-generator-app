@@ -15,6 +15,7 @@ interface AvatarGeneratorProps {
   onRandomizeAvatar: () => void;
   captureRef: RefObject<HTMLDivElement>;
   handleCapture: () => void;
+  moodSelect?: React.ReactNode;
 }
 
 const AvatarGenerator: FC<AvatarGeneratorProps> = ({
@@ -22,6 +23,7 @@ const AvatarGenerator: FC<AvatarGeneratorProps> = ({
   updateAvatarOption,
   onRandomizeAvatar,
   captureRef,
+  moodSelect,
   handleCapture,
 }) => {
   const expression = detectExpression(avatarOptions);
@@ -29,8 +31,9 @@ const AvatarGenerator: FC<AvatarGeneratorProps> = ({
     <div className="avatar-generator">
       <h1>Avatar Generator</h1>
       <div className="generator-container">
-        {/* Expression Label as Card */}
+        {/* MoodSelect and Expression Label as Card */}
         <ExpressionCard>
+          {moodSelect}
           <ExpressionLabel expression={expression} />
         </ExpressionCard>
         {/* Avatar Display */}
