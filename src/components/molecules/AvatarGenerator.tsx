@@ -1,8 +1,10 @@
-import { useRef, useState, type FC } from "react";
+import { useRef, useState, useMemo, type FC } from "react";
 import "@src/components/molecules/AvatarGenerator.css";
 import { Items } from "@src/constants/items";
 import type { AvatarOptions } from "@src/interfaces";
 import { ItemSelect } from "@src/components/atoms/ItemSelect";
+import { MoodDisplay } from "@src/components/molecules/MoodDisplay";
+import { detectMood } from "@src/utils/moodDetection";
 import html2canvas from "html2canvas";
 
 const AvatarGenerator: FC = () => {
@@ -15,6 +17,8 @@ const AvatarGenerator: FC = () => {
     skinColor: "light",
     eyebrows: "normal",
   });
+
+  const captureRef = useRef<HTMLDivElement | null>(null);
 
   const updateAvatarOption = (feature: keyof AvatarOptions, value: string) => {
     setAvatarOptions((prev) => ({
@@ -39,7 +43,14 @@ const AvatarGenerator: FC = () => {
     });
   };
 
-  const captureRef = useRef<HTMLDivElement | null>(null);
+  // Calculate mood analysis whenever facial features change
+  const moodAnalysis = useMemo(() => {
+    return detectMood({
+      mouth: avatarOptions.mouth,
+      eyebrows: avatarOptions.eyebrows,
+      eyes: avatarOptions.eyes,
+    });
+  }, [avatarOptions.mouth, avatarOptions.eyebrows, avatarOptions.eyes]);
 
   const handleCapture = () => {
     if (captureRef.current) {
@@ -91,6 +102,9 @@ const AvatarGenerator: FC = () => {
           </div>
         </div>
 
+        {/* Mood Analysis Display */}
+        <MoodDisplay moodAnalysis={moodAnalysis} />
+
         {/* Controls */}
         <div className="avatar-controls">
           {Object.entries(avatarOptions).map(([feature, value]) => (
@@ -99,23 +113,20 @@ const AvatarGenerator: FC = () => {
               label={feature as keyof AvatarOptions}
               value={value}
               options={Items[`${feature}` as keyof typeof Items] as string[]}
-              onChange={(feature, event) =>
-                updateAvatarOption(feature as keyof AvatarOptions, event)
-              }
+              onChange={(feature, event) => updateAvatarOption(feature, event)}
             />
           ))}
         </div>
-       
       </div>
 
       <div className="button-container">
-         <button className="randomize-btn" onClick={onRandomizeAvatar}>
+        <button className="randomize-btn" onClick={onRandomizeAvatar}>
           🎲 Randomize Avatar
         </button>
         <button className="randomize-btn" onClick={handleCapture}>
           📸 Capture Avatar
         </button>
-       </div>
+      </div>
     </div>
   );
 };
