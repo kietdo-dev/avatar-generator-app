@@ -4,17 +4,21 @@ interface ExpressionLabelProps {
   expression: string;
 }
 
+const emojiMap: Record<string, string> = {
+  Excited: "😄",
+  Happy: "😊",
+  Angry: "😠",
+  Sleepy: "😴",
+  Sad: "😢",
+  Funny: "😂",
+  Surprised: "😲",
+  Neutral: "😐",
+};
+
 export const ExpressionLabel: FC<ExpressionLabelProps> = ({ expression }) => (
   <div>
     <div className="expression-text">
-      {expression === "Excited" && "😄"}
-      {expression === "Happy" && "😊"}
-      {expression === "Angry" && "😠"}
-      {expression === "Sleepy" && "😴"}
-      {expression === "Sad" && "😢"}
-      {expression === "Funny" && "😂"}
-      {expression === "Surprised" && "😲"}
-      {expression === "Neutral" && "😐"}
+      {emojiMap[expression] && emojiMap[expression]}
       {` ${expression}`}
     </div>
   </div>
