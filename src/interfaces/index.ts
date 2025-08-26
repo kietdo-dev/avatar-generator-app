@@ -1,9 +1,8 @@
+import type { Items } from "@src/constants/items";
+
+export type AvatarFeatureKey = keyof typeof Items;
+export type AvatarFeature = (typeof Items)[AvatarFeatureKey][number];
+
 export type AvatarOptions = {
-  eyes: string;
-  nose: string;
-  mouth: string;
-  hairStyle: string;
-  hairColor: string;
-  skinColor: string;
-  eyebrows: string;
+  [K in AvatarFeatureKey]: (typeof Items)[K][number];
 };
