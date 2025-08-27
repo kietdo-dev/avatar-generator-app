@@ -1,5 +1,6 @@
-import type { AvatarOptions } from "@src/interfaces";
 import type { FC } from "react";
+
+import type { AvatarOptions } from "@src/interfaces";
 
 interface ItemSelectProps {
   options: string[];
@@ -17,10 +18,14 @@ export const ItemSelect: FC<ItemSelectProps> = ({
   return (
     <div className="control-group">
       <label htmlFor={label}>{label.toUpperCase()}:</label>
-      <select value={value} id={label} onChange={(e) =>{
-        const result = e.target.options[e.target.selectedIndex].value
-        onChange(label, result)
-      }}>
+      <select
+        value={value}
+        id={label}
+        onChange={(e) => {
+          const result = e.target.options[e.target.selectedIndex].value;
+          onChange(label, result);
+        }}
+      >
         {options.map((option) => (
           <option key={option} value={option}>
             {option.charAt(0).toUpperCase() + option.slice(1)}
