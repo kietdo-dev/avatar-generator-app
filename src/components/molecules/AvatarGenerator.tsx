@@ -1,11 +1,13 @@
-import { useRef, useState, useMemo, type FC } from "react";
-import "@src/components/molecules/AvatarGenerator.css";
-import { Items } from "@src/constants/items";
-import type { AvatarOptions } from "@src/interfaces";
+import { type FC, useMemo, useRef, useState } from "react";
+import html2canvas from "html2canvas";
+
 import { ItemSelect } from "@src/components/atoms/ItemSelect";
 import { MoodDisplay } from "@src/components/molecules/MoodDisplay";
+import { Items } from "@src/constants/items";
+import type { AvatarOptions } from "@src/interfaces";
 import { detectMood } from "@src/utils/moodDetection";
-import html2canvas from "html2canvas";
+
+import "@src/components/molecules/AvatarGenerator.css";
 
 const AvatarGenerator: FC = () => {
   const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>({
@@ -113,7 +115,9 @@ const AvatarGenerator: FC = () => {
               label={feature as keyof AvatarOptions}
               value={value}
               options={Items[`${feature}` as keyof typeof Items] as string[]}
-              onChange={(feature, event) => updateAvatarOption(feature, event)}
+              onChange={(featureChange, event) =>
+                updateAvatarOption(featureChange, event)
+              }
             />
           ))}
         </div>

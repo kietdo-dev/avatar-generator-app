@@ -9,8 +9,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mood-header {
@@ -171,22 +177,22 @@
     padding: 15px;
     margin: 15px 0;
   }
-  
+
   .mood-primary {
     flex-direction: column;
     text-align: center;
     gap: 10px;
   }
-  
+
   .mood-indicator {
     width: 50px;
     height: 50px;
   }
-  
+
   .mood-emoji {
     font-size: 1.5em;
   }
-  
+
   .traits-list {
     justify-content: center;
   }

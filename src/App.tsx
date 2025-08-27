@@ -1,12 +1,13 @@
-import AvatarGenerator from '@src/components/molecules/AvatarGenerator'
-import './App.css'
+import AvatarGenerator from "@src/components/molecules/AvatarGenerator";
+
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <AvatarGenerator />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

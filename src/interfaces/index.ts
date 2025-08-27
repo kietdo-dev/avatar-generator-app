@@ -6,4 +6,4 @@ export type AvatarOptions = {
   hairColor: string;
   skinColor: string;
   eyebrows: string;
-}
+};
