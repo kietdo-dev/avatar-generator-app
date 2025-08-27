@@ -35,7 +35,7 @@ function App() {
         avatarOptions={avatarOptions}
         updateAvatarOption={updateAvatarOption}
         onRandomizeAvatar={onRandomizeAvatar}
-        captureRef={captureRef as React.RefObject<HTMLDivElement>}
+        captureRef={captureRef}
         handleCapture={handleCapture}
         moodSelect={
           <MoodSelect value={selectedMood} onChange={handleMoodChange} />

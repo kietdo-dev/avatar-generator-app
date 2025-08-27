@@ -37,5 +37,5 @@ export type ValidateFeatureValue<K extends AvatarFeatureKey, V> =
 // Type for feature update functions
 export type AvatarFeatureUpdater = <K extends AvatarFeatureKey>(
   feature: K,
-  value: AvatarFeatureValue<K>,
+  value: AvatarFeatureValue<K>
 ) => void;

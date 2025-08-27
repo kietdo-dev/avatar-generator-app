@@ -7,10 +7,10 @@ import type {
 } from "@src/interfaces";
 
 export function useAvatarRandomizer(
-  setAvatarOptions: (opts: AvatarOptions) => void,
+  setAvatarOptions: (opts: AvatarOptions) => void
 ) {
   const onRandomItem = <T extends AvatarFeatureKey>(
-    items: AvatarFeatureListValue<T>,
+    items: AvatarFeatureListValue<T>
   ): AvatarFeatureValue<T> => {
     return items[Math.floor(Math.random() * items.length)];
   };

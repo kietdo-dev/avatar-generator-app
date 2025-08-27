@@ -1,7 +1,11 @@
 import { useState } from "react";
 
 import { Items } from "@src/constants/items";
-import type { AvatarFeatureKey, AvatarOptions } from "@src/interfaces";
+import type {
+  AvatarFeatureKey,
+  AvatarFeatureValue,
+  AvatarOptions,
+} from "@src/interfaces";
 
 export function useAvatarOptionsState(initial?: Partial<AvatarOptions>) {
   // Create default options by taking first item from each category
@@ -22,8 +26,8 @@ export function useAvatarOptionsState(initial?: Partial<AvatarOptions>) {
     const result = { ...defaults };
     for (const [key, value] of Object.entries(initial)) {
       const typedKey = key as AvatarFeatureKey;
-      const allowedValues = Items[typedKey] as unknown as string[];
-      if (allowedValues?.includes(value)) {
+      const allowedValues = Items[typedKey];
+      if (Array.isArray(allowedValues) && allowedValues.includes(value)) {
         (result as Record<string, string>)[typedKey] = value;
       }
     }
@@ -33,7 +37,10 @@ export function useAvatarOptionsState(initial?: Partial<AvatarOptions>) {
   const [avatarOptions, setAvatarOptions] =
     useState<AvatarOptions>(getInitialOptions);
 
-  const updateAvatarOption = (feature: keyof AvatarOptions, value: string) => {
+  const updateAvatarOption = <T extends AvatarFeatureKey>(
+    feature: AvatarFeatureKey,
+    value: AvatarFeatureValue<T>
+  ) => {
     setAvatarOptions((prev) => ({
       ...prev,
       [feature]: value,

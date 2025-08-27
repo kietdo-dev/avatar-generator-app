@@ -1,19 +1,26 @@
-import type { FC, RefObject } from "react";
+import type { FC } from "react";
 
 import { ExpressionCard } from "@src/components/atoms/ExpressionCard";
 import { ExpressionLabel } from "@src/components/atoms/ExpressionLabel";
 import { ItemSelect } from "@src/components/atoms/ItemSelect";
 import { Items } from "@src/constants/items";
 import { detectExpression } from "@src/domain/ports/detectExpression";
-import type { AvatarFeatureKey, AvatarOptions } from "@src/interfaces";
+import type {
+  AvatarFeatureKey,
+  AvatarFeatureValue,
+  AvatarOptions,
+} from "@src/interfaces";
 
 import "@src/components/molecules/AvatarGenerator.css";
 
 interface AvatarGeneratorProps {
   avatarOptions: AvatarOptions;
-  updateAvatarOption: (feature: AvatarFeatureKey, value: string) => void;
+  updateAvatarOption: <T extends AvatarFeatureKey>(
+    feature: AvatarFeatureKey,
+    value: AvatarFeatureValue<T>
+  ) => void;
   onRandomizeAvatar: () => void;
-  captureRef: RefObject<HTMLDivElement>;
+  captureRef: React.RefObject<HTMLDivElement | null>;
   handleCapture: () => void;
   moodSelect?: React.ReactNode;
 }
