@@ -5,13 +5,13 @@ import { ExpressionLabel } from "@src/components/atoms/ExpressionLabel";
 import { ItemSelect } from "@src/components/atoms/ItemSelect";
 import { Items } from "@src/constants/items";
 import { detectExpression } from "@src/domain/ports/detectExpression";
-import type { AvatarOptions } from "@src/interfaces";
+import type { AvatarFeatureKey, AvatarOptions } from "@src/interfaces";
 
 import "@src/components/molecules/AvatarGenerator.css";
 
 interface AvatarGeneratorProps {
   avatarOptions: AvatarOptions;
-  updateAvatarOption: (feature: keyof AvatarOptions, value: string) => void;
+  updateAvatarOption: (feature: AvatarFeatureKey, value: string) => void;
   onRandomizeAvatar: () => void;
   captureRef: RefObject<HTMLDivElement>;
   handleCapture: () => void;
@@ -61,17 +61,20 @@ const AvatarGenerator: FC<AvatarGeneratorProps> = ({
         </div>
         {/* Controls */}
         <div className="avatar-controls">
-          {Object.entries(avatarOptions).map(([featureKey, value]) => (
-            <ItemSelect
-              key={featureKey}
-              label={featureKey as keyof AvatarOptions}
-              value={value}
-              options={Items[featureKey as keyof typeof Items] as string[]}
-              onChange={(feature, event) =>
-                updateAvatarOption(feature as keyof AvatarOptions, event)
-              }
-            />
-          ))}
+          {Object.entries(avatarOptions).map(([featureKey, value]) => {
+            const featureKeyTyped = featureKey as AvatarFeatureKey;
+            return (
+              <ItemSelect<AvatarFeatureKey>
+                key={featureKeyTyped}
+                label={featureKeyTyped}
+                value={value}
+                options={Items[featureKeyTyped]}
+                onChange={(feature, event) =>
+                  updateAvatarOption(feature, event)
+                }
+              />
+            );
+          })}
         </div>
       </div>
       <div className="button-container">

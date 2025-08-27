@@ -3,6 +3,7 @@ import { useState } from "react";
 import { MoodSelect } from "@src/components/atoms/MoodSelect";
 import {
   getAvatarOptionsForMood,
+  type MoodOption,
   moodOptions,
 } from "@src/domain/ports/moodToAvatarOptions";
 
@@ -12,7 +13,7 @@ import { useAvatarGenerator } from "./hooks/useAvatarGenerator";
 import "./App.css";
 
 function App() {
-  const [selectedMood, setSelectedMood] = useState<string>(moodOptions[0]);
+  const [selectedMood, setSelectedMood] = useState<MoodOption>(moodOptions[0]);
   const {
     avatarOptions,
     setAvatarOptions,
@@ -23,7 +24,7 @@ function App() {
   } = useAvatarGenerator(getAvatarOptionsForMood(selectedMood));
 
   // When mood changes, update all avatar options to match mood
-  const handleMoodChange = (mood: string) => {
+  const handleMoodChange = (mood: MoodOption) => {
     setSelectedMood(mood);
     setAvatarOptions(getAvatarOptionsForMood(mood));
   };

@@ -1,25 +1,37 @@
 import { useState } from "react";
 
 import { Items } from "@src/constants/items";
-import type { AvatarOptions } from "@src/interfaces";
+import type { AvatarFeatureKey, AvatarOptions } from "@src/interfaces";
 
 export function useAvatarOptionsState(initial?: Partial<AvatarOptions>) {
-  const safeInitial = initial ?? {};
-  // Build a valid default AvatarOptions object from Items
-  const defaultOptions = Object.fromEntries(
-    Object.entries(Items).map(([key, arr]) => [key, arr[0]])
-  ) as AvatarOptions;
+  // Create default options by taking first item from each category
+  const createDefaults = () => {
+    const defaults: Record<string, string> = {};
+    Object.keys(Items).forEach((key) => {
+      const keyWithType = key as AvatarFeatureKey;
+      defaults[keyWithType] = Items[keyWithType][0];
+    });
+    return defaults as AvatarOptions;
+  };
 
-  // Merge initial with defaults, but validate each value
-  const merged: AvatarOptions = Object.fromEntries(
-    Object.entries(defaultOptions).map(([key, defVal]) => {
-      const val = safeInitial[key as keyof AvatarOptions];
-      const allowed = Items[key as keyof AvatarOptions];
-      return [key, allowed.includes(val as string) ? val : defVal];
-    })
-  ) as AvatarOptions;
+  // Merge and validate initial values
+  const getInitialOptions = (): AvatarOptions => {
+    const defaults = createDefaults();
+    if (!initial) return defaults;
 
-  const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(merged);
+    const result = { ...defaults };
+    for (const [key, value] of Object.entries(initial)) {
+      const typedKey = key as AvatarFeatureKey;
+      const allowedValues = Items[typedKey] as unknown as string[];
+      if (allowedValues?.includes(value)) {
+        (result as Record<string, string>)[typedKey] = value;
+      }
+    }
+    return result;
+  };
+
+  const [avatarOptions, setAvatarOptions] =
+    useState<AvatarOptions>(getInitialOptions);
 
   const updateAvatarOption = (feature: keyof AvatarOptions, value: string) => {
     setAvatarOptions((prev) => ({

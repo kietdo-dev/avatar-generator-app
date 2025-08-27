@@ -25,8 +25,10 @@ export type AvatarOptions = {
 
 // Utility types for better reusability
 export type PartialAvatarOptions = Partial<AvatarOptions>;
+export type AvatarFeatureListValue<K extends AvatarFeatureKey> =
+  (typeof Items)[K];
 export type AvatarFeatureValue<K extends AvatarFeatureKey> =
-  (typeof Items)[K][number];
+  AvatarFeatureListValue<K>[number];
 
 // Helper to validate if a value is valid for a specific feature
 export type ValidateFeatureValue<K extends AvatarFeatureKey, V> =
@@ -35,5 +37,5 @@ export type ValidateFeatureValue<K extends AvatarFeatureKey, V> =
 // Type for feature update functions
 export type AvatarFeatureUpdater = <K extends AvatarFeatureKey>(
   feature: K,
-  value: AvatarFeatureValue<K>
+  value: AvatarFeatureValue<K>,
 ) => void;

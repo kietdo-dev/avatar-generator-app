@@ -1,10 +1,13 @@
 import type { FC } from "react";
 
-import { moodOptions } from "@src/domain/ports/moodToAvatarOptions";
+import {
+  type MoodOption,
+  moodOptions,
+} from "@src/domain/ports/moodToAvatarOptions";
 
 interface MoodSelectProps {
-  value: string;
-  onChange: (mood: string) => void;
+  value: MoodOption;
+  onChange: (mood: MoodOption) => void;
 }
 
 export const MoodSelect: FC<MoodSelectProps> = ({ value, onChange }) => (
@@ -13,7 +16,7 @@ export const MoodSelect: FC<MoodSelectProps> = ({ value, onChange }) => (
     <select
       id="mood-select"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value as MoodOption)}
     >
       {moodOptions.map((mood) => (
         <option key={mood} value={mood}>

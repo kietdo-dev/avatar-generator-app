@@ -1,22 +1,29 @@
 import { Items } from "@src/constants/items";
-import type { AvatarOptions } from "@src/interfaces";
+import type {
+  AvatarFeatureKey,
+  AvatarFeatureListValue,
+  AvatarFeatureValue,
+  AvatarOptions,
+} from "@src/interfaces";
 
 export function useAvatarRandomizer(
-  setAvatarOptions: (opts: AvatarOptions) => void
+  setAvatarOptions: (opts: AvatarOptions) => void,
 ) {
-  const onRandomItem = (items: string[]) => {
+  const onRandomItem = <T extends AvatarFeatureKey>(
+    items: AvatarFeatureListValue<T>,
+  ): AvatarFeatureValue<T> => {
     return items[Math.floor(Math.random() * items.length)];
   };
 
   const onRandomizeAvatar = () => {
     setAvatarOptions({
-      eyes: onRandomItem(Items.eyes),
-      nose: onRandomItem(Items.nose),
-      mouth: onRandomItem(Items.mouth),
-      hairStyle: onRandomItem(Items.hairStyle),
-      hairColor: onRandomItem(Items.hairColor),
-      skinColor: onRandomItem(Items.skinColor),
-      eyebrows: onRandomItem(Items.eyebrows),
+      eyes: onRandomItem<"eyes">(Items.eyes),
+      nose: onRandomItem<"nose">(Items.nose),
+      mouth: onRandomItem<"mouth">(Items.mouth),
+      hairStyle: onRandomItem<"hairStyle">(Items.hairStyle),
+      hairColor: onRandomItem<"hairColor">(Items.hairColor),
+      skinColor: onRandomItem<"skinColor">(Items.skinColor),
+      eyebrows: onRandomItem<"eyebrows">(Items.eyebrows),
     });
   };
 

@@ -9,9 +9,10 @@ export const moodOptions = [
   "Funny",
   "Surprised",
   "Neutral",
-];
+] as const;
+export type MoodOption = (typeof moodOptions)[number];
 
-const moodToAvatarOptionsMap: Record<string, AvatarOptions> = {
+const moodToAvatarOptionsMap: Record<MoodOption, AvatarOptions> = {
   Happy: {
     eyes: "normal",
     nose: "normal",
@@ -86,6 +87,6 @@ const moodToAvatarOptionsMap: Record<string, AvatarOptions> = {
   },
 };
 
-export function getAvatarOptionsForMood(mood: string): AvatarOptions {
+export function getAvatarOptionsForMood(mood: MoodOption): AvatarOptions {
   return moodToAvatarOptionsMap[mood] || moodToAvatarOptionsMap["Neutral"];
 }

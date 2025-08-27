@@ -43,8 +43,8 @@ export function detectExpression(options: AvatarOptions): string {
       if (
         rule.conditions.some((condition) =>
           Object.entries(condition).every(
-            ([key, value]) => options[key as keyof AvatarOptions] === value
-          )
+            ([key, value]) => options[key as keyof AvatarOptions] === value,
+          ),
         )
       ) {
         return rule.expression;
@@ -53,7 +53,7 @@ export function detectExpression(options: AvatarOptions): string {
       // AND logic - all conditions must match
       if (
         Object.entries(rule.conditions).every(
-          ([key, value]) => options[key as keyof AvatarOptions] === value
+          ([key, value]) => options[key as keyof AvatarOptions] === value,
         )
       ) {
         return rule.expression;

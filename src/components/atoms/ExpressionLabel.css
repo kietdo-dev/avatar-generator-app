@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 1.5rem;
-  box-shadow: 0 4px 24px 0 rgba(80, 80, 180, 0.10);
+  box-shadow: 0 4px 24px 0 rgba(80, 80, 180, 0.1);
   margin-bottom: 1.5rem;
   min-width: 180px;
   max-width: 260px;
@@ -24,13 +24,17 @@
   background: #fff;
   border-radius: 0.7em;
   padding: 0.2em 1em;
-  box-shadow: 0 2px 12px 0 rgba(80,80,180,0.10), 0 1px 2px #fbbf24;
+  box-shadow:
+    0 2px 12px 0 rgba(80, 80, 180, 0.1),
+    0 1px 2px #fbbf24;
   letter-spacing: 0.08em;
-  text-shadow: 0 2px 8px #c7d2fe, 0 1px 2px #fbbf24;
+  text-shadow:
+    0 2px 8px #c7d2fe,
+    0 1px 2px #fbbf24;
   display: inline-block;
   margin-top: 0.2em;
   white-space: nowrap;
-  animation: pop-in 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+  animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 @keyframes pop-in {
