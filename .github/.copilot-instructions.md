@@ -1,0 +1,182 @@
+# Copilot Instructions for SOLID Principles
+
+## Code Style & Architecture Guidelines
+
+### SOLID Principles Enforcement
+
+## 🔥 HIGH PRIORITY RULES (Always Follow)
+
+1. **NEVER** put business logic in components - use hooks
+2. **ALWAYS** use TypeScript interfaces for props
+3. **PATTERN**: `.avatar-{feature}-{style}` for CSS classes
+4. **STRUCTURE**: Atomic design (atoms → molecules → organisms)
+
+## 📋 MEDIUM PRIORITY (Follow When Possible)
+
+- Extract to custom hooks when component > 50 lines
+- Use composition over prop drilling
+- Keep interfaces focused (< 5 props ideally)
+
+1. **Single Responsibility Principle (SRP)**
+   - Each component/function should have only ONE reason to change
+   - Separate UI rendering from business logic
+   - Keep components focused on presentation
+   - Extract side effects to custom hooks
+
+2. **Open/Closed Principle (OCP)**
+   - Use composition over inheritance
+   - Design components to be extendable via props
+   - Use generic types for reusable components
+   - Avoid hardcoded values, use configuration objects
+
+3. **Liskov Substitution Principle (LSP)**
+   - Ensure interface contracts are maintained
+   - Type safety with TypeScript strict mode
+   - Consistent prop interfaces across similar components
+
+4. **Interface Segregation Principle (ISP)**
+   - Keep interfaces small and focused
+   - Split large prop interfaces into smaller ones
+   - Use optional props wisely
+   - Avoid forcing components to depend on unused props
+
+5. **Dependency Inversion Principle (DIP)**
+   - Depend on abstractions, not concretions
+   - Use dependency injection via props
+   - Import from domain/ports for business logic
+   - Keep infrastructure concerns separate
+
+### React Component Guidelines
+
+#### Component Structure
+```typescript
+// ✅ GOOD: Clear separation of concerns
+interface ComponentProps {
+  data: DataType;
+  onAction: (data: DataType) => void;
+  children?: React.ReactNode;
+}
+
+const Component: FC<ComponentProps> = ({ data, onAction, children }) => {
+  // Only UI logic here
+  return <div>...</div>;
+};
+```
+
+#### Hook Structure
+```typescript
+// ✅ GOOD: Single responsibility hooks
+export function useDataFetching() {
+  // Only data fetching logic
+}
+
+export function useFormValidation() {
+  // Only form validation logic
+}
+```
+
+### Atomic Design Rules
+
+- **Atoms**: Basic UI elements, no business logic
+- **Molecules**: Combine atoms, minimal logic
+- **Organisms**: Complex components, use hooks for logic
+- **Templates**: Layout only
+- **Pages**: Compose everything, handle routing
+
+### File Organization
+
+```
+src/
+├── components/
+│   ├── atoms/          # Basic UI components
+│   ├── molecules/      # Composed components  
+│   └── organisms/      # Complex components
+├── hooks/              # Custom hooks (SRP)
+├── domain/
+│   ├── entities/       # Business objects
+│   ├── usecases/       # Business logic
+│   └── ports/          # Abstractions
+├── infrastructure/     # External dependencies
+└── interfaces/         # Type definitions
+```
+
+### Code Review Checklist
+
+Before submitting code, ensure:
+
+- [ ] Each function/component has a single responsibility
+- [ ] Components are extensible via props (OCP)
+- [ ] Interfaces are focused and minimal (ISP)
+- [ ] Business logic is in domain layer (DIP)
+- [ ] Types are strict and consistent (LSP)
+- [ ] No hardcoded values
+- [ ] Proper error handling
+- [ ] Unit tests cover business logic
+
+### Anti-Patterns to Avoid
+
+❌ **Avoid These:**
+```typescript
+// Violates SRP - doing too much
+const BadComponent = () => {
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState();
+  
+  useEffect(() => {
+    // API call logic
+    // Validation logic  
+    // Error handling
+    // State updates
+  }, []);
+  
+  return <div>Complex render logic...</div>;
+};
+
+// Violates ISP - too many responsibilities
+interface BadProps {
+  data: any;
+  onSave: () => void;
+  onDelete: () => void;
+  onEdit: () => void;
+  onValidate: () => void;
+  onExport: () => void;
+  theme: string;
+  locale: string;
+}
+```
+
+✅ **Do This Instead:**
+```typescript
+// SRP compliant
+const useDataManagement = () => {
+  // Only data management logic
+};
+
+const useValidation = () => {
+  // Only validation logic
+};
+
+const GoodComponent: FC<FocusedProps> = ({ data, onAction }) => {
+  const { validatedData } = useValidation(data);
+  
+  return <div>{/* Simple render logic */}</div>;
+};
+```
+
+## When Writing New Code
+
+1. **Always ask yourself**: "What is the single responsibility of this component/function?"
+2. **Check dependencies**: Am I importing the right abstractions?
+3. **Consider extensibility**: Can this be extended without modification?
+4. **Review interfaces**: Are they minimal and focused?
+5. **Test business logic**: Is domain logic testable in isolation?
+
+## AI Assistant Guidelines
+
+When suggesting code changes:
+- Prioritize SOLID principles over convenience
+- Suggest breaking large components into smaller ones
+- Recommend extracting business logic to hooks/domain layer
+- Ensure proper TypeScript typing
+- Consider testability and maintainability
+- Suggest composition patterns over complex inheritance
