@@ -1,20 +1,22 @@
-import type { FC } from "react";
+import type {
+  AvatarFeatureKey,
+  AvatarFeatureListValue,
+  AvatarFeatureValue,
+} from "@src/interfaces";
 
-import type { AvatarOptions } from "@src/interfaces";
-
-interface ItemSelectProps {
-  options: string[];
-  value: string;
-  label: keyof AvatarOptions;
-  onChange: (feature: keyof AvatarOptions, value: string) => void;
+interface ItemSelectProps<T extends AvatarFeatureKey> {
+  options: AvatarFeatureListValue<T>;
+  value: AvatarFeatureValue<T>;
+  label: T;
+  onChange: (feature: T, value: AvatarFeatureValue<T>) => void;
 }
 
-export const ItemSelect: FC<ItemSelectProps> = ({
+export const ItemSelect = <T extends AvatarFeatureKey>({
   options,
   value,
   label,
   onChange,
-}) => {
+}: ItemSelectProps<T>) => {
   return (
     <div className="control-group">
       <label htmlFor={label}>{label.toUpperCase()}:</label>
@@ -22,7 +24,7 @@ export const ItemSelect: FC<ItemSelectProps> = ({
         value={value}
         id={label}
         onChange={(e) => {
-          const result = e.target.options[e.target.selectedIndex].value;
+          const result = options[e.target.selectedIndex];
           onChange(label, result);
         }}
       >

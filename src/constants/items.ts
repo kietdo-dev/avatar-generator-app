@@ -6,4 +6,4 @@ export const Items = {
   hairColor: ["brown", "black", "blonde", "red", "gray", "blue", "pink"],
   skinColor: ["light", "medium", "dark", "tan"],
   eyebrows: ["normal", "thick", "thin", "raised", "angry"],
-};
+} as const;
