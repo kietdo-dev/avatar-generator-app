@@ -1,25 +1,29 @@
 import { useRef } from "react";
-import html2canvas from "html2canvas";
 
-export function useAvatarCapture() {
+import type { CaptureService } from "@src/domain/ports/CaptureService";
+import type { DownloadService } from "@src/domain/ports/DownloadService";
+
+interface UseAvatarCaptureProps {
+  captureService: CaptureService;
+  downloadService: DownloadService;
+}
+
+export function useAvatarCapture({
+  captureService,
+  downloadService,
+}: UseAvatarCaptureProps) {
   const captureRef = useRef<HTMLDivElement | null>(null);
 
-  const handleCapture = () => {
-    if (captureRef.current) {
-      html2canvas(captureRef.current, {
-        useCORS: true,
-        scale: 2,
-      })
-        .then((canvas) => {
-          const image = canvas.toDataURL("image/png");
-          const link = document.createElement("a");
-          link.href = image;
-          link.download = "avatar.png";
-          link.click();
-        })
-        .catch((err) => {
-          console.error("Error capturing screenshot:", err);
-        });
+  const handleCapture = async () => {
+    if (!captureRef.current) {
+      return;
+    }
+
+    try {
+      const dataUrl = await captureService.captureElement(captureRef.current);
+      downloadService.downloadImage(dataUrl, "avatar.png");
+    } catch (error) {
+      console.error("Error capturing screenshot:", error);
     }
   };
 
